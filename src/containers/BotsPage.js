@@ -4,9 +4,17 @@ import YourBotArmy from "./YourBotArmy";
 
 class BotsPage extends Component {
   
-  state = {
-    bots: [],
-    myColletion: [],
+  // state = {
+  //   bots: [],
+  //   myColletion: [],
+  // }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      bots: [],
+      myColletion: [],
+    }
   }
 
   componentDidMount() {
@@ -18,35 +26,31 @@ class BotsPage extends Component {
       .then(bots => this.setState({bots}))
   }
 
-  addToBotArmy = (clickedBot) => {
+  addToBotArmy = (clickRobot) => {
 
     const myBot = this.state.myColletion.find(bot => {
-     return bot.id === clickedBot.id
+     return bot.id === clickRobot.id
     })
     if (!myBot) {
       this.setState({
-        myColletion: [...this.state.myColletion, clickedBot]
+        myColletion: [...this.state.myColletion, clickRobot]
       })
     }
   }
 
-  removeFromCollection = (clickedBot) => {
+  // removeFromCollection = (clickRobot) => {
 
-    const updatedArmy = this.state.myColletion.filter(bot => {
-      return bot.id !== clickedBot.id
-    })
+  //   // const updatedArray = this.state.myColletion.filter(bot => {
+  //     // return bot.id !== clickRobot.id
+   
+  // }
 
-    this.setState({
-      myColletion: [...updatedArmy]
-    })
-  }
+  deleteBot = (clickRobot) => {
 
-  deleteBot = (clickedBot) => {
-
-    const bots = this.state.bots.filter(bot => bot.id !== clickedBot.id)
+    const bots = this.state.bots.filter(bot => bot.id !== clickRobot.id)
     
     const myColletion = this.state.myColletion.filter(bot => {
-      bot.id !== clickedBot.id
+      bot.id !== clickRobot.id
     })
 
     this.setState({
@@ -54,7 +58,7 @@ class BotsPage extends Component {
       myColletion: myColletion
     })
 
-    fetch(`http://localhost:6001/bots/${clickedBot.id}` , {
+    fetch(`http://localhost:6001/bots/${clickRobot.id}` , {
       method: "DELETE"
     })
   }
@@ -64,7 +68,6 @@ class BotsPage extends Component {
       <div>
         <YourBotArmy
           myColletion={this.state.myColletion}
-          removeFromCollection={this.removeFromCollection}
           deleteBot={this.deleteBot}
         />
         <BotCollection 

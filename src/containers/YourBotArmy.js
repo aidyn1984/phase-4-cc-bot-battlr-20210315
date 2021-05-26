@@ -9,7 +9,7 @@ class YourBotArmy extends Component {
         <BotCard
           key={bot.id}
           bot={bot}
-          onClickBot={this.props.removeFromCollection}
+
           deleteBot={this.props.deleteBot}
         />
       )
