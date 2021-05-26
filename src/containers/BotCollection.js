@@ -3,25 +3,24 @@ import BotCard from '../components/BotCard'
 
 class BotCollection extends Component {
   
-  createBots = () => {
+  createBotCards = () => {
     return this.props.bots.map(bot => {
       return (
-        <BotCard 
+      <BotCard 
         key={bot.id}
         bot={bot}
-        onClick={this.props.addToBotArmy}
+        onClickBot={this.props.addToBotArmy}
         deleteBot={this.props.deleteBot}
-        />
+      />
       )
     })
-  }
+  } 
 
   render() {
     return (
       <div className="ui four column grid">
         <div className="row">
-          {this.createBots()}
-          Collection of all bots
+          {this.createBotCards()}
         </div>
       </div>
     );
