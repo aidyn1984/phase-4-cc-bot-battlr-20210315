@@ -4,12 +4,12 @@ import BotCard from "../components/BotCard";
 class YourBotArmy extends Component {
   
   createArmyCards = () => {
-    return this.props.myColletion.map(bot => {
+    return this.props.myArmyCollection.map(bot => {
       return (
         <BotCard
           key={bot.id}
           bot={bot}
-
+          onClickBot={this.props.removeFromBotArmy}
           deleteBot={this.props.deleteBot}
         />
       )

@@ -12,7 +12,7 @@ const botTypeClasses = {
 const BotCard = props => {
   
   const handleDelete = (event) => {
-    event.preventDefault();
+    event.stopPropagation()
     props.deleteBot(props.bot)
   }
 

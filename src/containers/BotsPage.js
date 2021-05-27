@@ -4,61 +4,58 @@ import YourBotArmy from "./YourBotArmy";
 
 class BotsPage extends Component {
   
-  // state = {
-  //   bots: [],
-  //   myColletion: [],
-  // }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      bots: [],
-      myColletion: [],
-    }
+  state = {
+    bots: [],
+    myArmyCollection: [],
   }
 
   componentDidMount() {
     this.fetchBots()
   }
+
   fetchBots = () => {
     fetch('http://localhost:6001/bots')
       .then(response => response.json())
       .then(bots => this.setState({bots}))
   }
 
-  addToBotArmy = (clickRobot) => {
+  addToBotArmy = (clickedBot) => {
 
-    const myBot = this.state.myColletion.find(bot => {
-     return bot.id === clickRobot.id
+    const thatOneBot = this.state.myArmyCollection.find(bot => {
+     return bot.id === clickedBot.id
     })
-    if (!myBot) {
+    if (!thatOneBot) {
       this.setState({
-        myColletion: [...this.state.myColletion, clickRobot]
+        myArmyCollection: [...this.state.myArmyCollection, clickedBot]
       })
     }
   }
 
-  // removeFromCollection = (clickRobot) => {
+  removeFromBotArmy = (clickedBot) => {
 
-  //   // const updatedArray = this.state.myColletion.filter(bot => {
-  //     // return bot.id !== clickRobot.id
-   
-  // }
+    const updatedArmy = this.state.myArmyCollection.filter(bot => {
+      return bot.id !== clickedBot.id
+    })
 
-  deleteBot = (clickRobot) => {
+    this.setState({
+      myArmyCollection: [...updatedArmy]
+    })
+  }
 
-    const bots = this.state.bots.filter(bot => bot.id !== clickRobot.id)
+  deleteBot = (clickedBot) => {
+
+    const bots = this.state.bots.filter(bot => bot.id !== clickedBot.id)
     
-    const myColletion = this.state.myColletion.filter(bot => {
-      bot.id !== clickRobot.id
+    const myArmyCollection = this.state.myArmyCollection.filter(bot => {
+      bot.id !== clickedBot.id
     })
 
     this.setState({
       bots,
-      myColletion: myColletion
+      myArmyCollection: myArmyCollection
     })
 
-    fetch(`http://localhost:6001/bots/${clickRobot.id}` , {
+    fetch(`http://localhost:6001/bots/${clickedBot.id}` , {
       method: "DELETE"
     })
   }
@@ -67,7 +64,8 @@ class BotsPage extends Component {
     return ( 
       <div>
         <YourBotArmy
-          myColletion={this.state.myColletion}
+          myArmyCollection={this.state.myArmyCollection}
+          removeFromBotArmy={this.removeFromBotArmy}
           deleteBot={this.deleteBot}
         />
         <BotCollection 
